@@ -29,7 +29,16 @@ app.post('/repositories', (request, response) => {
 });
 
 app.put('/repositories/:id', (request, response) => {
-  // TODO
+  const { id } = request.params;
+  const { title, url, techs } = request.body;
+  const repository = repositories.find((repository) => repository.id === id);
+
+  if(!repository) { 
+    return response.status(400).json({message: "Repository not found!"});
+  }
+
+  const updatedRepository = Object.assign(repository, { title, url, techs });
+  return response.json(updatedRepository);
 });
 
 app.delete('/repositories/:id', (request, response) => {
